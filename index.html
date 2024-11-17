@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beetlejuice Beetlejuice</title>
+    <style>
+        body {
+            background-color: #121212;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+        header {
+            margin-bottom: 20px;
+        }
+        header img {
+            width: 190px;
+        }
+        .poster {
+            width: 50%;
+            max-width: 300px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .video-container {
+            position: relative;
+            width: 90%;
+            max-width: 800px;
+            margin-bottom: 20px;
+        }
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background-color: #ff3333;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            color: white;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            animation: pulse 1.5s infinite, wiggle 1s infinite;
+        }
+        .play-button:hover {
+            transform: translate(-50%, -50%) scale(1.2);
+            box-shadow: 0 0 30px rgba(255, 51, 51, 0.8);
+            background-color: #ff6666;
+        }
+        .play-button:active {
+            transform: translate(-50%, -50%) scale(0.8);
+            animation: clickEffect 0.3s forwards;
+        }
+        .play-button:focus {
+            outline: none;
+        }
+        @keyframes pulse {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.05);
+                box-shadow: 0 0 25px rgba(255, 51, 51, 0.8);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
+            }
+        }
+        @keyframes wiggle {
+            0%, 100% {
+                transform: translate(-50%, -50%) rotate(-5deg);
+            }
+            50% {
+                transform: translate(-50%, -50%) rotate(5deg);
+            }
+        }
+        @keyframes clickEffect {
+            0% {
+                transform: translate(-50%, -50%) scale(0.8);
+                box-shadow: 0 0 30px rgba(255, 51, 51, 0.8);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                box-shadow: 0 0 10px rgba(255, 51, 51, 0.5);
+            }
+        }
+        video {
+            width: 100%;
+            border: 2px solid #ff3333;
+            border-radius: 10px;
+        }
+        .description {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+        footer {
+            margin-top: 20px;
+        }
+        .countdown-container {
+            margin-top: 20px;
+            color: #ff3333;
+            font-size: 18px;
+        }
+        .add-movie-btn {
+            margin-top: 20px;
+            padding: 15px 30px;
+            background-color: #ff3333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: 'Arial', sans-serif;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .add-movie-btn:hover {
+            background-color: #ff6666;
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(255, 102, 102, 0.8);
+        }
+    </style>
+    <script>
+        // Empêcher le clic droit
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // Empêcher l'utilisation des outils de développement via les touches clavier
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'F12' || (event.ctrlKey && event.shiftKey && event.key === 'I') ||
+                (event.ctrlKey && event.shiftKey && event.key === 'J') || (event.ctrlKey && event.key === 'U')) {
+                event.preventDefault();
+            }
+        });
+
+        // Empêcher l'inspection via les boutons de la souris
+        document.addEventListener('mousedown', function(event) {
+            if (event.button === 2 || event.button === 3) {
+                event.preventDefault();
+                alert('Inspection interdite !');
+            }
+        });
+
+        // Empêcher le téléchargement de la vidéo
+        document.addEventListener('DOMContentLoaded', function() {
+            var video = document.getElementById('film');
+            video.setAttribute('controlsList', 'nodownload');
+
+            // Ajouter un événement de clic sur le bouton pour lancer la vidéo
+            var playButton = document.getElementById('play-button');
+            playButton.addEventListener('click', function() {
+                video.play();
+                playButton.style.display = 'none';
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <img src="https://blogger.googleusercontent.com/img/a/AVvXsEjS4goNzedC_h3563MM9JZDeSqVrY9C5IYBhlVs78NdwKpUH8q7Ls6_oj8H2KKasUtNplGCM4IY9GOOON8NhkyJojSBo2Oht4JmwLKIVIHxp_APGw1f0QP7BLWAo0aHtK0LzbV012aA8UKmpqaBi8vLJHmlYg-95xCP5VpqHH80PKiJYYPGfPqPkKKtIR8=w200" alt="Logo du site">
+    </header>
+    <img src="https://image.tmdb.org/t/p/w300/4M8fnQF821aVFBbhLdTQGf4j4W9.jpg" alt="Affiche du Film" class="poster">
+    <p class="title">Beetlejuice Beetlejuice</p>
+    <div class="video-container">
+        <video id="film" controls controlsList="nodownload">
+            <source src="https://cinefilms.online/movies/Beetlejuice-Beetlejuice.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la lecture vidéo.
+        </video>
+        <button id="play-button" class="play-button">▶</button>
+    </div>
+    <footer>
+        <p>À la suite d'une tragédie familiale inattendue, trois générations de la famille Deetz rentrent dans leur maison à Winter River, toujours hantée par Beetlejuice. Là-bas, Lydia voit sa vie prendre un nouveau tournant lorsque Astrid, sa fille en plein âge rebelle, découvre la mystérieuse maquette de la ville et que le portail vers l'au-delà s'ouvre accidentellement. Les ennuis se rapprochent des deux royaumes, et ce n'est qu'une question de temps avant que quelqu'un ne prononce le nom de Beetlejuice trois fois et que ce démon malicieux revienne pour semer le chaos sur son passage.</p>
+        <div class="countdown-container">
+            <p>Le film changera dans 2 jours</p>
+        </div>
+        <button class="add-movie-btn" onclick="window.location.href='https://horrormovies18.github.io/Horror-Movies---Contactez-Nous/'">Ajouter votre film</button>
+        <p>Le prochain film sera choisi en fonction des demandes des personnes. Si votre film a été demandé par beaucoup de personnes, il y a de grandes chances qu'il soit ajouté.</p>
+    </footer>
+</body>
+</html>
